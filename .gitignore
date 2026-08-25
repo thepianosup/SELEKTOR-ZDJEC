@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Wirtualne środowisko
+venv/
+.venv/
+env/
+
+# Dane programu (stan sesji - nie do synchronizacji)
+state.json
+
+# Zbudowane aplikacje i pliki instalacyjne
+Selektor Zdjec.app/
+*.dmg
+
+# IDE i edytory
+.idea/
+.vscode/
+*.swp
+*.swo
