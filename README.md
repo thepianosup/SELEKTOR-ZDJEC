@@ -1,6 +1,8 @@
 # Selektor Zdjęć
 
-Program do szybkiego przeglądania i selekcjonowania zdjęć oraz dodawania daty na zdjęciach.
+Program na macOS do szybkiego przeglądania i selekcjonowania zdjęć oraz dodawania daty na zdjęciach.
+
+Repozytorium (kopia zapasowa): https://github.com/thepianosup/SELEKTOR-ZDJEC
 
 ## Do czego służy program
 
@@ -43,23 +45,86 @@ Obrót zapisuje się bezpośrednio w pliku w folderze źródłowym.
 
 Kliknij **„Resetuj historię"**, aby zacząć od nowa – program zapomni, które zdjęcia już były wybrane lub odrzucone, i pokaże je ponownie.
 
-## Wymagania
+## Ściągawka – skróty klawiszowe
 
-- Python 3
-- Biblioteki: `PyQt6`, `Pillow`
-
-Uruchomienie:
-
-```
-pip install PyQt6 Pillow
-python main.py
-```
+| Klawisz | Działanie |
+|---|---|
+| → | Kopiuj zdjęcie do folderu docelowego |
+| ← | Odrzuć zdjęcie |
+| ↑ | Obróć o 90° w prawo |
+| ↓ | Obróć o 90° w lewo |
+| CMD + Z | Cofnij ostatnią decyzję |
 
 ## Wspierane formaty
 
 JPG, JPEG, PNG oraz HEIC (jeśli system potrafi je otworzyć).
 
-## Ważne
+## Ważne informacje o działaniu
 
-- Program zapamiętuje stan pracy w pliku `state.json` – po zamknięciu i ponownym uruchomieniu kontynuujesz od tego samego miejsca.
+- Program zapamiętuje stan pracy w pliku `state.json` (tworzy go w miejscu uruchomienia) – po zamknięciu i ponownym uruchomieniu kontynuujesz od tego samego miejsca.
 - Wybrane zdjęcia są **kopiowane**, nie przenoszone – oryginały pozostają w folderze źródłowym.
+- Aplikacja działa na macOS.
+
+---
+
+# Część techniczna – odtwarzanie projektu z GitHuba
+
+Ten projekt może zostać usunięty z dysku, a kopią zapasową jest repozytorium na GitHubie. Poniżej opisano, jak w razie potrzeby odtworzyć go od zera i jak zbudować aplikację `.app` oraz instalator `.dmg` (te pliki celowo nie są w repozytorium, bo można je wygenerować w każdej chwili).
+
+## Wymagania
+
+- macOS
+- Python 3.13 (testowane na 3.13.5)
+- Biblioteki: PyQt6 (testowane 6.11.0), Pillow (testowane 12.2.0)
+- Do zbudowania aplikacji: PyInstaller (testowane 6.20.0)
+
+## Krok 1: Pobranie projektu z GitHuba
+
+```bash
+git clone https://github.com/thepianosup/SELEKTOR-ZDJEC.git
+cd SELEKTOR-ZDJEC
+```
+
+## Krok 2: Uruchomienie programu ze źródeł
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install PyQt6 Pillow
+python main.py
+```
+
+## Krok 3: Zbudowanie aplikacji .app (opcjonalnie)
+
+```bash
+source venv/bin/activate
+pip install pyinstaller
+pyinstaller --windowed --name "Selektor Zdjec" --icon appIcon.icns main.py
+```
+
+Gotowa aplikacja pojawi się w folderze `dist/Selektor Zdjec.app`.
+
+## Krok 4: Zbudowanie instalatora .dmg (opcjonalnie)
+
+```bash
+hdiutil create -volname "Selektor Zdjec" -srcfolder "dist/Selektor Zdjec.app" -ov -format UDZO "Selektor_Zdjec.dmg"
+```
+
+## Zawartość repozytorium
+
+| Plik | Opis |
+|---|---|
+| `main.py` | Cały kod programu – to jedyny plik potrzebny do uruchomienia. |
+| `appIcon.icns` | Ikona aplikacji, potrzebna do zbudowania `.app`. |
+| `.gitignore` | Lista plików wykluczonych z repozytorium. |
+| `README.md` | Ten plik – instrukcja obsługi i informacje o projekcie. |
+| `patch_script.py`, `patch2.py` | Historyczne skrypty, których użyto podczas tworzenia programu do modyfikacji `main.py`. Nie są potrzebne do uruchomienia – `main.py` zawiera już wszystkie ich poprawki. |
+
+## Czego nie ma w repozytorium (i co przepadnie po usunięciu folderu)
+
+Te pliki są wykluczone przez `.gitignore`, ponieważ można je łatwo odtworzyć:
+
+- `venv/` – wirtualne środowisko (odtworzysz je komendą z kroku 2),
+- `Selektor Zdjec.app/` i `*.dmg` – gotowa aplikacja i instalator (odtworzysz je krokami 3 i 4),
+- `state.json` – postęp bieżącej sesji selekcji zdjęć (nie jest częścią projektu),
+- `.DS_Store` – śmieci systemowe macOS.

@@ -1,32 +1,42 @@
-# macOS
+# ==========================================================================
+# Pliki wymienione poniżej NIE trafiają na GitHuba.
+# Jeśli usuniesz projekt z dysku, a chcesz mieć pełną kopię na GitHubie,
+# upewnij się, że wszystko potrzebne zostało dodane komendą: git add .
+# ==========================================================================
+
+# --- macOS (śmieci systemowe) ---
 .DS_Store
 .AppleDouble
 .LSOverride
 ._*
 
-# Python
+# --- Python (pliki tymczasowe, generowane automatycznie) ---
 __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
 .eggs/
-build/
-dist/
 
-# Wirtualne środowisko
+# --- Wirtualne środowisko (można odtworzyć: python3 -m venv venv) ---
 venv/
 .venv/
 env/
 
-# Dane programu (stan sesji - nie do synchronizacji)
+# --- Stan programu (historia wyboru zdjęć - dane konkretnej sesji) ---
 state.json
 
-# Zbudowane aplikacje i pliki instalacyjne
+# --- Zbudowana aplikacja i instalator (do odtworzenia przez PyInstaller) ---
 Selektor Zdjec.app/
 *.dmg
+*.spec
+build/
+dist/
 
-# IDE i edytory
+# --- IDE i edytory ---
 .idea/
 .vscode/
 *.swp
 *.swo
+
+# --- Logi ---
+*.log
